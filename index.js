@@ -9,6 +9,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: ["http://localhost:3000"] }));
 
+const userRoutes = require("./routes/userRoutes");
+app.use("/", userRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 mongoose
