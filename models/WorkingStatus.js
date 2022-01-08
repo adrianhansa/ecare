@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const workingStatusSchema = new mongoose.Schema(
   {
     present: { type: Boolean, default: true, required: true },
-    description: { type: String, required: true }, //on shift, training, off sick, suspended, holiday, meetings
+    description: { type: String, required: true }, //on shift, training, off sick, suspended, holiday, meetings, shadowing
   },
   { timestamps: true }
 );
