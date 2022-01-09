@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const workingStatusSchema = new mongoose.Schema(
   {
-    present: { type: Boolean, default: true, required: true },
+    presence: { type: Boolean, required: true },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -13,4 +13,4 @@ const workingStatusSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model(workingStatusSchema, "workingstatus");
+module.exports = mongoose.model("workingstatus", workingStatusSchema);
