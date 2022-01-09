@@ -11,8 +11,10 @@ app.use(cors({ origin: ["http://localhost:3000"] }));
 
 const userRoutes = require("./routes/userRoutes");
 const serviceRoutes = require("./routes/serviceRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
 app.use("/", userRoutes);
 app.use("/services", serviceRoutes);
+app.use("/employees", employeeRoutes);
 
 const PORT = process.env.PORT || 5000;
 
