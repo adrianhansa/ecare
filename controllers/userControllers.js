@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Company = require("../models/Company");
 const sendToken = require("../utils/sendToken");
 const bcrypt = require("bcryptjs");
+const Employee = require("../models/Employee");
 
 const register = async (req, res) => {
   try {
@@ -56,6 +57,22 @@ const login = async (req, res) => {
   }
 };
 
+const employeeLogin = async (req, res) => {
+  try {
+    const { payrollNumber, password } = req.body;
+    if (!payrollNumber || !password)
+      return res.status(400).json({ message: "All fields are required." });
+    const user = await Employee.findOne({ payrollNumber });
+    if (!user) return res.status(404).json({ message: "Employee not found." });
+    const passwordVerify = await bcrypt.compare(password, user.password);
+    if (!passwordVerify)
+      return res.status(400).json({ message: "Invalid email/password" });
+    sendToken(user, 200, res);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const logout = async (req, res) => {
   try {
     res.clearCookie("token").send();
@@ -64,4 +81,4 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout };
+module.exports = { register, login, employeeLogin, logout };
