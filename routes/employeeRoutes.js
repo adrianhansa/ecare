@@ -11,9 +11,9 @@ const { manager } = require("../middlewares/auth");
 
 router.get("/", manager, getEmployees);
 router.post("/", manager, addEmployee);
+router.get("/all", manager, getAllEmployees);
 router.get("/:id", manager, getEmployee);
 router.put("/:id", manager, updateEmployee);
 router.delete("/:id", manager, deleteEmployee);
-router.get("/all", manager, getAllEmployees);
 
 module.exports = router;
