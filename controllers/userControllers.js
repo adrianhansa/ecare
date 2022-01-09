@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const Company = require("../models/Company");
 const sendToken = require("../utils/sendToken");
-const { populate } = require("../models/User");
+const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
   try {
@@ -42,7 +42,15 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    //
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ message: "Email/password are required" });
+    const user = await User.findOne({ email }).populate("company");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    const passwordVerify = await bcrypt.compare(password, user.password);
+    if (!passwordVerify)
+      return res.status(400).json({ message: "Invalid email/password" });
+    sendToken(user, 200, res);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -50,7 +58,7 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    //
+    res.clearCookie("token").send();
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

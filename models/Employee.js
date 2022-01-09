@@ -23,6 +23,7 @@ const employeeSchema = new mongoose.Schema(
     driver: { type: Boolean, default: false },
     contractHours: { type: Number, default: 0 },
     role: { type: String, required: true },
+    accessLevel: { type: Number, default: 1 },
   },
   { timestamps: true }
 );
