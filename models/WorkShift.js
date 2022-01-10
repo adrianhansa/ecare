@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const workShiftSchema = new mongoose.Schema(
   {
     date: { type: Date, required: true },
+    service: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "services",
+      required: true,
+    },
     employee: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
