@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const shiftSchema = new mongoose.Schema(
   {
+    service: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "services",
+    },
     name: { type: String, required: true, unique: true },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
@@ -25,4 +30,4 @@ shiftSchema.pre("save", function () {
   }
 });
 
-module.exports = mongoose.model("shifts", companySchema);
+module.exports = mongoose.model("shifts", shiftSchema);
