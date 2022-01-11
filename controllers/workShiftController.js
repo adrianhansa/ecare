@@ -87,7 +87,11 @@ const getWorkShift = async (req, res) => {
 
 const getWorkShiftsByDay = async (req, res) => {
   try {
-    //
+    const workshifts = await WorkShift.find({
+      service: req.user.service._id,
+      date: req.params.day,
+    });
+    res.status(200).json(workshifts);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -95,7 +99,11 @@ const getWorkShiftsByDay = async (req, res) => {
 
 const getWorkShiftsByInterval = async (req, res) => {
   try {
-    //
+    const workshifts = await WorkShift.find({
+      service: req.user.service._id,
+      date: { $gte: req.params.start, $lte: req.params.end },
+    });
+    res.status(200).json(workshifts);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
