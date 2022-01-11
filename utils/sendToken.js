@@ -10,16 +10,17 @@ const sendToken = (user, statusCode, res) => {
     },
     process.env.JWT_SECRET
   );
-  console.log({
-    service: user.service ? user.service : "n/a",
-    company: user.company,
-  });
   if (!token)
     return res.status(500).json({ message: "Token could not be sent." });
-  res.status(statusCode).cookie("token", token, { httpOnly: true }).json({
-    name: user.name,
-    service: user.service,
-  });
+  res
+    .status(statusCode)
+    .cookie("token", token, { httpOnly: true })
+    .json({
+      name: user.name,
+      id: user._id,
+      service: user.service ? user.service : "n/a",
+      company: user.company,
+    });
 };
 
 module.exports = sendToken;

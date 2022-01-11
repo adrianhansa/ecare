@@ -7,7 +7,12 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ["http://localhost:3000"] }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://ecare.herokuapp.com"],
+    credentials: true,
+  })
+);
 
 const userRoutes = require("./routes/userRoutes");
 const serviceRoutes = require("./routes/serviceRoutes");
