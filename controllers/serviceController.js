@@ -64,8 +64,8 @@ const updateService = async (req, res) => {
 
 const deleteService = async (req, res) => {
   try {
-    const service = await Service.findByIdAndDelete(req.params.service);
-    if (!service) return res.status(404).json({ message: "Service not founr" });
+    const service = await Service.findByIdAndDelete(req.params.id);
+    if (!service) return res.status(404).json({ message: "Service not found" });
     res.status(200).json({ message: "Service deleted" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
