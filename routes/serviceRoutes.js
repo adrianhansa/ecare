@@ -10,7 +10,7 @@ const { director, manager, senior, rcw } = require("../middlewares/auth");
 
 router.get("/", senior, getServices);
 router.post("/", director, addService);
-router.get("/:id", rcw, getService);
+router.get("/:slug", rcw, getService);
 router.put("/:id", manager, updateService);
 router.delete("/:id", director, deleteService);
 

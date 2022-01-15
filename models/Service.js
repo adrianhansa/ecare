@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const serviceSchema = new mongoose.Schema(
   {
@@ -8,6 +9,7 @@ const serviceSchema = new mongoose.Schema(
       ref: "companies",
       required: true,
     },
+    slug: { type: String, unique: true, required: true },
     address: { type: String, default: "" },
     phone: { type: String, default: "" },
   },
