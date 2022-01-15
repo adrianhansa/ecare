@@ -50,12 +50,6 @@ const updateService = async (req, res) => {
   try {
     if (!req.body.name)
       return res.status(400).json({ message: "The name is required" });
-    const existingService = await Service.findOne({ name: req.body.name });
-    if (existingService)
-      return res.status(400).json({
-        message:
-          "You already have a service with this name. Please enter a different name.",
-      });
     const service = await Service.findByIdAndUpdate(
       req.params.id,
       { name: req.body.name, address: req.body.address, phone: req.body.phone },
