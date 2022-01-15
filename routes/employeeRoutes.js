@@ -9,8 +9,8 @@ const {
 } = require("../controllers/employeeController");
 const { manager } = require("../middlewares/auth");
 
-router.get("/", manager, getEmployees);
-router.post("/", manager, addEmployee);
+router.post("/:service", manager, addEmployee);
+router.get("/:service", manager, getEmployees);
 router.get("/all", manager, getAllEmployees);
 router.get("/:id", manager, getEmployee);
 router.put("/:id", manager, updateEmployee);

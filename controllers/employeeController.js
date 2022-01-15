@@ -1,13 +1,19 @@
 const Employee = require("../models/Employee");
+const Service = require("../models/Service");
 const niceware = require("niceware");
 
 const addEmployee = async (req, res) => {
   try {
+    const service = await Service.findOne({
+      slug: req.params.service,
+      company: req.user.company._id,
+    });
+    if (!service)
+      return res.status(404).json({ message: "Service not found." });
     const {
       name,
       email,
       payrollNumber,
-      service,
       address,
       phone,
       contractHours,
@@ -34,7 +40,7 @@ const addEmployee = async (req, res) => {
       name,
       email,
       payrollNumber,
-      service,
+      service: service._id,
       address,
       phone,
       contractHours,
@@ -114,8 +120,14 @@ const getEmployee = async (req, res) => {
 
 const getEmployees = async (req, res) => {
   try {
+    const service = await Service.findOne({
+      slug: req.params.service,
+      company: req.user.company._id,
+    });
+    if (!service)
+      return res.status(404).json({ message: "Service not found." });
     const employees = await Employee.find({
-      service: req.user.service._id,
+      service: service._id,
     }).populate("service");
     res.status(200).json(employees);
   } catch (error) {
