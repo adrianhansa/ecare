@@ -2,8 +2,16 @@ const WorkShift = require("../models/WorkShift");
 
 const addWorkShift = async (req, res) => {
   try {
-    const { date, employee, shift, startTime, endTime, notes, workingStatus } =
-      req.body;
+    const {
+      date,
+      employee,
+      shift,
+      startTime,
+      endTime,
+      notes,
+      workingStatus,
+      allocatedTo,
+    } = req.body;
     if (
       !date ||
       !employee ||
@@ -20,7 +28,7 @@ const addWorkShift = async (req, res) => {
       startTime,
       endTime,
       notes,
-      workingStatus,
+      allocatedTo,
       service: req.user.service._id,
     });
     res.status(200).json(workShift);
@@ -31,7 +39,7 @@ const addWorkShift = async (req, res) => {
 
 const updateWorkShift = async (req, res) => {
   try {
-    const { date, employee, shift, startTime, endTime, notes, workingStatus } =
+    const { date, employee, shift, startTime, endTime, notes, allocatedTo } =
       req.body;
     if (
       !date ||
@@ -51,7 +59,7 @@ const updateWorkShift = async (req, res) => {
         startTime,
         endTime,
         notes,
-        workingStatus,
+        allocatedTo,
       },
       { new: true }
     );

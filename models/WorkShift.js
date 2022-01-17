@@ -22,11 +22,7 @@ const workShiftSchema = new mongoose.Schema(
     endTime: { type: String, required: true },
     duration: { type: Number },
     notes: { type: String },
-    workingStatus: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "workingstatus",
-    },
+    allocatedTo: { type: String },
   },
   { timestamps: true }
 );
