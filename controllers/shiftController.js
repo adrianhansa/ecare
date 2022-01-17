@@ -2,13 +2,14 @@ const Shift = require("../models/Shift");
 
 const addShift = async (req, res) => {
   try {
-    const { name, startTime, endTime } = req.body;
+    const { name, startTime, endTime, present } = req.body;
     if (!name || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const shift = await Shift.create({
       name,
       startTime,
       endTime,
+      present,
       service: req.service,
     });
     res.status(200).json(shift);
@@ -19,7 +20,7 @@ const addShift = async (req, res) => {
 
 const updateShift = async (req, res) => {
   try {
-    const { name, startTime, endTime } = req.body;
+    const { name, startTime, endTime, present } = req.body;
     if (!name || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const startHour = startTime.split(":")[0];

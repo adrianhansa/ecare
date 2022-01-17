@@ -11,6 +11,7 @@ const shiftSchema = new mongoose.Schema(
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
     duration: { type: Number },
+    present: { type: Boolean, required: true },
   },
   { timestamps: true }
 );
