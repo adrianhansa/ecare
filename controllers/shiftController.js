@@ -9,7 +9,7 @@ const addShift = async (req, res) => {
       name,
       startTime,
       endTime,
-      service: req.user.service._id,
+      service: req.service,
     });
     res.status(200).json(shift);
   } catch (error) {
@@ -38,7 +38,7 @@ const updateShift = async (req, res) => {
       req.params.id,
       { name, startTime, endTime, duration },
       { new: true }
-    );
+    ).populate("service");
     if (!shift) return res.status(404).json({ message: "Shift not found." });
     res.status(200).json(shift);
   } catch (error) {
@@ -58,7 +58,7 @@ const deleteShift = async (req, res) => {
 
 const getShift = async (req, res) => {
   try {
-    const shift = await Shift.findById(req.params.id);
+    const shift = await Shift.findById(req.params.id).populate("service");
     if (!shift) return res.status(404).json({ message: "Shift not found" });
     res.status(200).json(shift);
   } catch (error) {
@@ -68,7 +68,9 @@ const getShift = async (req, res) => {
 
 const getShifts = async (req, res) => {
   try {
-    const shifts = await Shift.find({ service: req.user.service._id });
+    const shifts = await Shift.find({ service: req.service }).populate(
+      "service"
+    );
     res.status(200).json(shifts);
   } catch (error) {
     return res.status(500).json({ message: error.message });

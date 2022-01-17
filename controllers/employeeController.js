@@ -87,7 +87,7 @@ const updateEmployee = async (req, res) => {
         accessLevel,
       },
       { new: true }
-    );
+    ).populate("service");
     if (!employee)
       return res.status(404).json({ message: "Employee not found" });
     res.status(200).json(employee);
