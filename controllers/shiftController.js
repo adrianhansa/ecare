@@ -20,7 +20,7 @@ const addShift = async (req, res) => {
 
 const updateShift = async (req, res) => {
   try {
-    const { name, startTime, endTime, present } = req.body;
+    const { name, startTime, endTime } = req.body;
     if (!name || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const startHour = startTime.split(":")[0];
@@ -37,7 +37,7 @@ const updateShift = async (req, res) => {
     }
     const shift = await Shift.findByIdAndUpdate(
       req.params.id,
-      { name, startTime, endTime, duration },
+      { name, startTime, endTime, duration, present: req.body.present },
       { new: true }
     ).populate("service");
     if (!shift) return res.status(404).json({ message: "Shift not found." });

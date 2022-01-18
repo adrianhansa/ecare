@@ -2,24 +2,9 @@ const WorkShift = require("../models/WorkShift");
 
 const addWorkShift = async (req, res) => {
   try {
-    const {
-      date,
-      employee,
-      shift,
-      startTime,
-      endTime,
-      notes,
-      workingStatus,
-      allocatedTo,
-    } = req.body;
-    if (
-      !date ||
-      !employee ||
-      !shift ||
-      !startTime ||
-      !endTime ||
-      !workingStatus
-    )
+    const { date, employee, shift, startTime, endTime, notes, allocatedTo } =
+      req.body;
+    if (!date || !employee || !shift || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const workShift = await WorkShift.create({
       date,
@@ -29,7 +14,7 @@ const addWorkShift = async (req, res) => {
       endTime,
       notes,
       allocatedTo,
-      service: req.user.service._id,
+      service,
     });
     res.status(200).json(workShift);
   } catch (error) {
@@ -41,14 +26,7 @@ const updateWorkShift = async (req, res) => {
   try {
     const { date, employee, shift, startTime, endTime, notes, allocatedTo } =
       req.body;
-    if (
-      !date ||
-      !employee ||
-      !shift ||
-      !startTime ||
-      !endTime ||
-      !workingStatus
-    )
+    if (!date || !employee || !shift || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const workShift = await WorkShift.findByIdAndUpdate(
       req.params.id,
