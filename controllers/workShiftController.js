@@ -14,7 +14,7 @@ const addWorkShift = async (req, res) => {
       endTime,
       notes,
       allocatedTo,
-      service,
+      service: req.service,
     });
     res.status(200).json(workShift);
   } catch (error) {
@@ -86,7 +86,7 @@ const getWorkShiftsByDay = async (req, res) => {
 const getWorkShiftsByInterval = async (req, res) => {
   try {
     const workshifts = await WorkShift.find({
-      service: req.user.service._id,
+      service: req.service,
       date: { $gte: req.params.start, $lte: req.params.end },
     });
     res.status(200).json(workshifts);
