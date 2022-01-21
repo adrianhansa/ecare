@@ -8,6 +8,7 @@ const shiftSchema = new mongoose.Schema(
       ref: "services",
     },
     name: { type: String, required: true },
+    color: { type: String },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
     duration: { type: Number },

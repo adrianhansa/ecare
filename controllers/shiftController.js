@@ -2,11 +2,12 @@ const Shift = require("../models/Shift");
 
 const addShift = async (req, res) => {
   try {
-    const { name, startTime, endTime, present } = req.body;
+    const { name, startTime, endTime, present, color } = req.body;
     if (!name || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const shift = await Shift.create({
       name,
+      color,
       startTime,
       endTime,
       present,
@@ -20,7 +21,7 @@ const addShift = async (req, res) => {
 
 const updateShift = async (req, res) => {
   try {
-    const { name, startTime, endTime } = req.body;
+    const { name, startTime, endTime, color } = req.body;
     if (!name || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
     const startHour = startTime.split(":")[0];
@@ -37,7 +38,7 @@ const updateShift = async (req, res) => {
     }
     const shift = await Shift.findByIdAndUpdate(
       req.params.id,
-      { name, startTime, endTime, duration, present: req.body.present },
+      { name, startTime, endTime, duration, color, present: req.body.present },
       { new: true }
     ).populate("service");
     if (!shift) return res.status(404).json({ message: "Shift not found." });

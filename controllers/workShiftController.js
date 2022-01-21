@@ -88,7 +88,7 @@ const getWorkShiftsByInterval = async (req, res) => {
     const workshifts = await WorkShift.find({
       service: req.service,
       date: { $gte: req.params.start, $lte: req.params.end },
-    });
+    }).populate("shift");
     res.status(200).json(workshifts);
   } catch (error) {
     return res.status(500).json({ message: error.message });
