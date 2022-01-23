@@ -54,7 +54,7 @@ const deleteWorkShift = async (req, res) => {
     const workShift = await WorkShift.findByIdAndDelete(req.params.id);
     if (!workShift)
       return res.status(404).json({ message: "Working shift not found" });
-    res.status(200).json({ message: "The shift could not be found." });
+    res.status(200).json({ message: "Shift deleted." });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

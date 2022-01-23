@@ -19,11 +19,13 @@ const serviceRoutes = require("./routes/serviceRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const shiftRoutes = require("./routes/shiftRoutes");
 const workShiftRoutes = require("./routes/workShiftRoutes");
+const serviceUserRoutes = require("./routes/serviceUserRoutes");
 app.use("/", userRoutes);
 app.use("/services", serviceRoutes);
 app.use("/employees", employeeRoutes);
 app.use("/shifts", shiftRoutes);
 app.use("/work-shifts", workShiftRoutes);
+app.use("/service-users", serviceUserRoutes);
 
 const PORT = process.env.PORT || 5000;
 
