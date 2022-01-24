@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const serviceUserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    active: { type: Boolean, required: true, default: true },
+    active: { type: Boolean, default: true },
     company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "companies",
