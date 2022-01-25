@@ -22,6 +22,7 @@ const workShiftRoutes = require("./routes/workShiftRoutes");
 const serviceUserRoutes = require("./routes/serviceUserRoutes");
 const diaryRoutes = require("./routes/diaryRoutes");
 const handoverRoutes = require("./routes/handoverEntryRoutes");
+const appraisalRoutes = require("./routes/appraisalRoutes");
 app.use("/", userRoutes);
 app.use("/services", serviceRoutes);
 app.use("/employees", employeeRoutes);
@@ -30,6 +31,7 @@ app.use("/work-shifts", workShiftRoutes);
 app.use("/service-users", serviceUserRoutes);
 app.use("/diary", diaryRoutes);
 app.use("/handover", handoverRoutes);
+app.use("/appraisals", appraisalRoutes);
 
 const PORT = process.env.PORT || 5000;
 
