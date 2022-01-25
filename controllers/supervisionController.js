@@ -2,10 +2,11 @@ const Supervision = require("../models/Supervision");
 
 const addSupervision = async (req, res) => {
   try {
-    if (!req.date || !req.supervisee || !req.supervisor)
+    if (!req.plannedDate || !req.supervisee || !req.supervisor)
       return res.status(400).json({ mesage: "All fields are required." });
     const supervision = await Supervision.create({
       date: req.date,
+      plannedDate: req.plannedDate,
       supervisee: req.supervisee,
       supervisor: req.supervisor,
       service: req.service,
@@ -18,12 +19,13 @@ const addSupervision = async (req, res) => {
 
 const updateSupervision = async (req, res) => {
   try {
-    if (!req.date || !employee)
+    if (!req.date || !req.employee)
       return res.status(400).json({ mesage: "All fields are required." });
     const supervision = await Supervision.findByIdAndUpdate(
       req.params.id,
       {
         date: req.date,
+        plannedDate: req.plannedDate,
         supervisee: req.supervisee,
         supervisor: req.supervisor,
       },
