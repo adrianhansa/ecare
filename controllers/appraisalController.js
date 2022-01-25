@@ -2,11 +2,11 @@ const Appraisal = require("../models/Appraisal");
 
 const addAppraisal = async (req, res) => {
   try {
-    if (!req.date || !employee)
+    if (!req.date || !req.employee)
       return res.status(400).json({ mesage: "All fields are required." });
     const appraisal = await Appraisal.create({
-      date,
-      employee,
+      date: req.date,
+      employee: req.employee,
       service: req.service,
     });
     res.status(200).json(appraisal);
@@ -17,11 +17,11 @@ const addAppraisal = async (req, res) => {
 
 const updateAppraisal = async (req, res) => {
   try {
-    if (!req.date || !employee)
+    if (!req.date || !req.employee)
       return res.status(400).json({ mesage: "All fields are required." });
     const appraisal = await Appraisal.findByIdAndUpdate(
       req.params.id,
-      { date, employee, service: req.service },
+      { date: req.date, employee: req.employee },
       { new: true }
     );
     if (!appraisal)
