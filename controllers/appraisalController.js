@@ -17,11 +17,11 @@ const addAppraisal = async (req, res) => {
 
 const updateAppraisal = async (req, res) => {
   try {
-    if (!req.date || !req.employee)
+    if (!req.date)
       return res.status(400).json({ mesage: "All fields are required." });
     const appraisal = await Appraisal.findByIdAndUpdate(
       req.params.id,
-      { date: req.date, employee: req.employee },
+      { date: req.date },
       { new: true }
     );
     if (!appraisal)
