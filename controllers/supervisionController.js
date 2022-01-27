@@ -2,7 +2,7 @@ const Supervision = require("../models/Supervision");
 
 const addSupervision = async (req, res) => {
   try {
-    if (!req.body.date || !req.body.supervisor || req.body.supervisee)
+    if (!req.body.date || !req.body.supervisor || !req.body.supervisee)
       return res.status(400).json({ mesage: "All fields are required." });
     const supervision = await Supervision.create({
       date: req.body.date,
@@ -52,7 +52,10 @@ const getSupervision = async (req, res) => {
 
 const getSupervisions = async (req, res) => {
   try {
-    const supervisions = await Supervision.find({ service: req.service });
+    const supervisions = await Supervision.find({ service: req.service })
+      .populate("supervisor")
+      .populate("supervisee");
+    console.log(supervisions);
     res.status(200).json(supervisions);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -64,7 +67,9 @@ const getSupervisionsBySupervisee = async (req, res) => {
     const supervisions = await Supervision.find({
       service: req.service,
       supervisee: req.params.supervisee,
-    }).populate("supervisee");
+    })
+      .populate("supervisor")
+      .populate("supervisee");
     res.status(200).json(supervisions);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -76,7 +81,9 @@ const getSupervisionsBySupervisor = async (req, res) => {
     const supervisions = await Supervision.find({
       service: req.service,
       supervisor: req.params.supervisor,
-    }).populate("supervisor");
+    })
+      .populate("supervisor")
+      .populate("supervisee");
     res.status(200).json(supervisions);
   } catch (error) {
     return res.status(500).json({ message: error.message });

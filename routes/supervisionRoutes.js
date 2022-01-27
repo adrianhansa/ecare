@@ -11,18 +11,19 @@ const {
 const { manager } = require("../middlewares/auth");
 const service = require("../middlewares/service");
 
-router.post("/:service", service, manager, addSupervision);
-router.get("/:service", service, manager, getSupervisions);
+router.post("/:service", manager, service, addSupervision);
+router.get("/:service", manager, service, getSupervisions);
 router.get(
   "/:service/:supervisee",
-  service,
   manager,
+  service,
   getSupervisionsBySupervisee
 );
 router.get(
   "/:service/:supervisor",
-  service,
+
   manager,
+  service,
   getSupervisionsBySupervisor
 );
 router.get("/:id", manager, getSupervision);

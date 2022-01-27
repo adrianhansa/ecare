@@ -9,7 +9,7 @@ const communicationSchema = new mongoose.Schema(
     },
     date: { type: Date, required: true },
     content: { type: String, required: true },
-    sender: {
+    employee: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "employees",

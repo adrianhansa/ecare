@@ -10,7 +10,7 @@ const service = async (req, res, next) => {
     req.service = service._id;
     next();
   } catch (error) {
-    return res.satus(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 module.exports = service;

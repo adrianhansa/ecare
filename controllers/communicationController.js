@@ -8,7 +8,7 @@ const addCommunication = async (req, res) => {
     const communication = await Communication.create({
       date,
       content,
-      sender: req.user.id,
+      employee: req.user.id,
       service: req.service,
     });
     res.status(200).json(communication);
@@ -27,7 +27,7 @@ const updateCommunication = async (req, res) => {
       {
         date,
         content,
-        sender: req.user.id,
+        employee: req.user.id,
       },
       { new: true }
     );
@@ -69,7 +69,9 @@ const getCommunication = async (req, res) => {
 
 const getCommunications = async (req, res) => {
   try {
-    const communications = await Communication.find({ service: req.service });
+    const communications = await Communication.find({
+      service: req.service,
+    }).populate("employee");
     res.status(200).json(communications);
   } catch (error) {
     return res.status(500).json({ message: error.message });
