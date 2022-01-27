@@ -2,11 +2,11 @@ const Appraisal = require("../models/Appraisal");
 
 const addAppraisal = async (req, res) => {
   try {
-    if (!req.date || !req.employee)
+    if (!req.body.date || !req.body.employee)
       return res.status(400).json({ mesage: "All fields are required." });
     const appraisal = await Appraisal.create({
-      date: req.date,
-      employee: req.employee,
+      date: req.body.date,
+      employee: req.body.employee,
       service: req.service,
     });
     res.status(200).json(appraisal);
@@ -17,11 +17,11 @@ const addAppraisal = async (req, res) => {
 
 const updateAppraisal = async (req, res) => {
   try {
-    if (!req.date)
+    if (!req.body.date)
       return res.status(400).json({ mesage: "All fields are required." });
     const appraisal = await Appraisal.findByIdAndUpdate(
       req.params.id,
-      { date: req.date },
+      { date: req.body.date },
       { new: true }
     );
     if (!appraisal)
@@ -45,7 +45,9 @@ const getAppraisal = async (req, res) => {
 
 const getAppraisals = async (req, res) => {
   try {
-    const appraisals = await Appraisal.find({ service: req.service });
+    const appraisals = await Appraisal.find({ service: req.service }).populate(
+      "employee"
+    );
     res.status(200).json(appraisals);
   } catch (error) {
     return res.status(500).json({ message: error.message });

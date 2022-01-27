@@ -2,8 +2,16 @@ const mongoose = require("mongoose");
 // const moment = require("moment");
 
 const appraisalSchema = new mongoose.Schema({
-  employee: { type: mongoose.Schema.Types.ObjectId, required: true },
-  service: { type: mongoose.Schema.Types.ObjectId, required: true },
+  employee: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "employees",
+  },
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "services",
+  },
   date: { type: Date, required: true },
 });
 

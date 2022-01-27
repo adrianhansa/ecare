@@ -9,8 +9,8 @@ const {
 const { manager } = require("../middlewares/auth");
 const service = require("../middlewares/service");
 
-router.post("/:service", service, manager, addAppraisal);
-router.get("/:service", service, manager, getAppraisals);
+router.post("/:service", manager, service, addAppraisal);
+router.get("/:service", manager, service, getAppraisals);
 router.get("/:id", manager, getAppraisal);
 router.put("/:id", manager, updateAppraisal);
 router.delete("/:id", manager, deleteAppraisal);

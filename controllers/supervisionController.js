@@ -19,13 +19,13 @@ const addSupervision = async (req, res) => {
 
 const updateSupervision = async (req, res) => {
   try {
-    if (!req.body.plannedDate || !req.body.supervisor || req.body.supervisee)
+    if (!req.body.plannedDate || !req.body.supervisor || !req.body.supervisee)
       return res.status(400).json({ mesage: "All fields are required." });
     const supervision = await Supervision.findByIdAndUpdate(
       req.params.id,
       {
         date: req.body.date,
-        plannedDate: req.plannedDate,
+        plannedDate: req.body.plannedDate,
         supervisee: req.body.supervisee,
         supervisor: req.body.supervisor,
       },
@@ -55,7 +55,6 @@ const getSupervisions = async (req, res) => {
     const supervisions = await Supervision.find({ service: req.service })
       .populate("supervisor")
       .populate("supervisee");
-    console.log(supervisions);
     res.status(200).json(supervisions);
   } catch (error) {
     return res.status(500).json({ message: error.message });
