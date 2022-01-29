@@ -1,19 +1,15 @@
 const mongoose = require("mongoose");
 
-const serviceUsersSchema = new mongoose.Schema({
-  serviceUser: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "serviceUsers",
-  },
-});
-
 const handOverSchema = new mongoose.Schema(
   {
     date: { type: Date, required: true },
     time: { type: String, required: true },
-    notes: { type: String, required: true },
-    serviceUsers: [serviceUsersSchema],
+    serviceUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "serviceUsers",
+    },
+    comment: { type: String, required: true },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
