@@ -3,7 +3,7 @@ const Handover = require("../models/Handover");
 const addHandoverEntry = async (req, res) => {
   try {
     const { date, time, notes } = req.body;
-    if (!date || !time || !notes)
+    if (!date || !time || !notes || !serviceUsers)
       return res
         .status(400)
         .json({ message: "Please fill in all the fields." });
@@ -11,6 +11,7 @@ const addHandoverEntry = async (req, res) => {
       date,
       time,
       notes,
+      serviceUsers,
       service: req.service,
       employee: req.user.id,
     });
@@ -22,14 +23,14 @@ const addHandoverEntry = async (req, res) => {
 
 const updateHandoverEntry = async (req, res) => {
   try {
-    const { date, time, notes } = req.body;
-    if (!date || !time || !notes)
+    const { date, time, notes, serviceUsers } = req.body;
+    if ((!date || !time || !notes, !serviceUsers))
       return res
         .status(400)
         .json({ message: "Please fill in all the fields." });
     const handoverEntry = await Handover.findByIdAndUpdate(
       req.params.id,
-      { date, time, notes, employee: req.user.id },
+      { date, time, notes, employee: req.user.id, serviceUsers },
       { new: true }
     );
     if (!handoverEntry)
