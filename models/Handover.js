@@ -9,7 +9,7 @@ const handOverSchema = new mongoose.Schema(
       required: true,
       ref: "serviceUsers",
     },
-    comment: { type: String, required: true },
+    notes: { type: String, required: true },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

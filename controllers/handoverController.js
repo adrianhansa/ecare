@@ -2,8 +2,8 @@ const Handover = require("../models/Handover");
 
 const addHandoverEntry = async (req, res) => {
   try {
-    const { date, time, notes } = req.body;
-    if (!date || !time || !notes || !serviceUsers)
+    const { date, time, notes, serviceUser } = req.body;
+    if (!date || !time || !notes || !serviceUser)
       return res
         .status(400)
         .json({ message: "Please fill in all the fields." });
@@ -11,7 +11,7 @@ const addHandoverEntry = async (req, res) => {
       date,
       time,
       notes,
-      serviceUsers,
+      serviceUser,
       service: req.service,
       employee: req.user.id,
     });
@@ -23,14 +23,14 @@ const addHandoverEntry = async (req, res) => {
 
 const updateHandoverEntry = async (req, res) => {
   try {
-    const { date, time, notes, serviceUsers } = req.body;
-    if ((!date || !time || !notes, !serviceUsers))
+    const { date, time, notes, serviceUser } = req.body;
+    if ((!date || !time || !notes, !serviceUser))
       return res
         .status(400)
         .json({ message: "Please fill in all the fields." });
     const handoverEntry = await Handover.findByIdAndUpdate(
       req.params.id,
-      { date, time, notes, employee: req.user.id, serviceUsers },
+      { date, time, notes, employee: req.user.id, serviceUser },
       { new: true }
     );
     if (!handoverEntry)
@@ -61,6 +61,17 @@ const getHandoverEntries = async (req, res) => {
   }
 };
 
+const getHandoverEntriesByServiceUser = async (req, res) => {
+  try {
+    const handoverEntries = await Handover.find({
+      serviceUser: req.body.serviceUser,
+    });
+    res.status(200).json(handoverEntries);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const deleteHandoverEntry = async (req, res) => {
   try {
     const handoverEntry = await Handover.findByIdAndDelete(req.params.id);
@@ -76,6 +87,7 @@ module.exports = {
   addHandoverEntry,
   updateHandoverEntry,
   getHandoverEntries,
+  getHandoverEntriesByServiceUser,
   getHandoverEntry,
   deleteHandoverEntry,
 };
