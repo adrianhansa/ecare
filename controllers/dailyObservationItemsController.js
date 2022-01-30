@@ -49,7 +49,6 @@ const toggleStatus = async (req, res) => {
   try {
     const item = await DailyObservationItem.findById(req.params.id);
     if (!item) return res.status(404).json({ message: "Item not found" });
-    res.status(200).json(item);
     const updatedItem = await DailyObservationItem.findByIdAndUpdate(
       req.params.id,
       { active: !item.active },
