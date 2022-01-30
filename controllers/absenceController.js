@@ -48,7 +48,7 @@ const getAbsence = async (req, res) => {
 
 const getAbsencesByEmployee = async (req, res) => {
   try {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate } = req.params;
     if (!startDate || !endDate)
       return res
         .status(400)
@@ -66,7 +66,7 @@ const getAbsencesByEmployee = async (req, res) => {
 
 const getAbsencesByDates = async (req, res) => {
   try {
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate } = req.params;
     if (!startDate || !endDate)
       return res
         .status(400)
