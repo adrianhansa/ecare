@@ -7,6 +7,7 @@ const addItem = async (req, res) => {
     const item = await DailyObservationItem.create({
       description: req.body.description,
       element: req.body.element,
+      name: req.body.name,
       service: req.service,
     });
     res.status(200).json(item);
@@ -24,6 +25,7 @@ const updateItem = async (req, res) => {
       {
         description: req.body.description,
         element: req.body.element,
+        name: req.body.name,
         active: req.body.active,
       },
       { new: true }

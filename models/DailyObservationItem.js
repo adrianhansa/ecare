@@ -7,6 +7,7 @@ const itemSchema = new mongoose.Schema({
     ref: "services",
   },
   active: { type: Boolean, default: true },
+  name: { type: String },
   description: { type: String, required: true },
   element: { type: String },
 });
