@@ -8,6 +8,7 @@ const itemSchema = new mongoose.Schema({
   },
   active: { type: Boolean, default: true },
   name: { type: String },
+  values: [{ type: String }],
   description: { type: String, required: true },
   element: { type: String },
 });

@@ -8,6 +8,7 @@ const addItem = async (req, res) => {
       description: req.body.description,
       element: req.body.element,
       name: req.body.name,
+      values: req.body.values,
       service: req.service,
     });
     res.status(200).json(item);
@@ -18,6 +19,7 @@ const addItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   try {
+    console.log(req.body);
     if (!req.body.description || !req.body.element)
       return res.status(400).json({ message: "All fields are required." });
     const item = await DailyObservationItem.findByIdAndUpdate(
@@ -26,6 +28,7 @@ const updateItem = async (req, res) => {
         description: req.body.description,
         element: req.body.element,
         name: req.body.name,
+        values: req.body.values,
         active: req.body.active,
       },
       { new: true }
