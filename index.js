@@ -27,6 +27,7 @@ const supervisionRoutes = require("./routes/supervisionRoutes");
 const communicationRoutes = require("./routes/communicationRoutes");
 const absenceRoutes = require("./routes/absenceRutes");
 const dailyObservationItemRoutes = require("./routes/dailyObservationItemRoutes");
+const dalyObservationRoutes = require("./routes/dailyObservationRoutes");
 
 app.use("/", userRoutes);
 app.use("/services", serviceRoutes);
@@ -41,6 +42,7 @@ app.use("/supervisions", supervisionRoutes);
 app.use("/communications", communicationRoutes);
 app.use("/absences", absenceRoutes);
 app.use("/daily-observation-items", dailyObservationItemRoutes);
+app.use("/daily-observations", dalyObservationRoutes);
 
 const PORT = process.env.PORT || 5000;
 
