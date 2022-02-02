@@ -4,6 +4,7 @@ const dailyObservationSchema = new mongoose.Schema(
   {
     date: { type: Date, required: true },
     shift: { type: String, required: true },
+    staff: { type: Schema.Types.ObjectId, required: true, ref: "employees" },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "services",

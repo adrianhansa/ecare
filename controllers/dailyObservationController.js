@@ -12,6 +12,7 @@ const addRecord = async (req, res) => {
       serviceUser,
       service: req.service,
       records,
+      staff: req.user._id,
     });
     res.status(200).json(record);
   } catch (error) {
@@ -31,6 +32,7 @@ const updateRecord = async (req, res) => {
         shift,
         service: req.service,
         records,
+        staff: req.user._id,
       },
       { new: true }
     );
