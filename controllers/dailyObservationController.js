@@ -12,7 +12,7 @@ const addRecord = async (req, res) => {
       serviceUser,
       service: req.service,
       records,
-      staff: req.user._id,
+      staff: req.user.id,
     });
     res.status(200).json(record);
   } catch (error) {
