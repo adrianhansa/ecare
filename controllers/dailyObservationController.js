@@ -6,6 +6,16 @@ const addRecord = async (req, res) => {
     const { date, shift, serviceUser, records } = req.body;
     if (!date || !shift || !serviceUser || !records)
       return res.status(400).json({ message: "Please complete all fields." });
+    //check for existing record
+    const existingRecord = await DailyObservation.findOne({
+      service: req.service,
+      date,
+      shift,
+    });
+    if (existingRecord)
+      return res
+        .status(400)
+        .json({ message: "You have already created this document." });
     const record = await DailyObservation.create({
       date,
       shift,
