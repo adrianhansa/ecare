@@ -1,5 +1,22 @@
-const { findById } = require("../models/DailyObservation");
 const DailyObservation = require("../models/DailyObservation");
+
+const findRecord = async (req, res) => {
+  try {
+    const { date, shift, serviceUser } = req.params;
+    if (!shift || !date || !serviceUser)
+      return res.status(400).json({ message: "Missing parameters" });
+    const record = await DailyObservation.findOne({
+      service: req.service,
+      serviceUserDailyObservation,
+      date,
+      shift,
+    });
+    if (!record) return res.status(404).json({ message: "Recrd not found" });
+    res.status(200).json(record);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 const addRecord = async (req, res) => {
   try {
@@ -138,4 +155,5 @@ module.exports = {
   getRecordsByInterval,
   archiveRecord,
   reactivateRecord,
+  findRecord,
 };
