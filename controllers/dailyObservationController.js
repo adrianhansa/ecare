@@ -7,12 +7,13 @@ const findRecord = async (req, res) => {
       return res.status(400).json({ message: "Missing parameters" });
     const record = await DailyObservation.findOne({
       service: req.service,
-      serviceUserDailyObservation,
+      serviceUser,
       date,
       shift,
     });
-    if (!record) return res.status(404).json({ message: "Recrd not found" });
-    res.status(200).json(record);
+    if (record)
+      //return res.json(); //res.status(404).json({ message: "Record not found" });
+      res.status(200).json(record);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -24,15 +25,15 @@ const addRecord = async (req, res) => {
     if (!date || !shift || !serviceUser || !records)
       return res.status(400).json({ message: "Please complete all fields." });
     //check for existing record
-    const existingRecord = await DailyObservation.findOne({
-      service: req.service,
-      date,
-      shift,
-    });
-    if (existingRecord)
-      return res
-        .status(400)
-        .json({ message: "You have already created this document." });
+    // const existingRecord = await DailyObservation.findOne({
+    //   service: req.service,
+    //   date,
+    //   shift,
+    // });
+    // if (existingRecord)
+    //   return res
+    //     .status(400)
+    //     .json({ message: "You have already created this document." });
     const record = await DailyObservation.create({
       date,
       shift,
@@ -49,8 +50,8 @@ const addRecord = async (req, res) => {
 
 const updateRecord = async (req, res) => {
   try {
-    const { date, shift, serviceUser, records } = req.body;
-    if (!date || !shift || !serviceUser || !records)
+    const { date, shift, records } = req.body;
+    if (!date || !shift || !records)
       return res.status(400).json({ message: "Please complete all fields." });
     const record = await DailyObservation.findByIdAndUpdate(
       req.params.id,

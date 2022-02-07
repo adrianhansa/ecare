@@ -15,8 +15,8 @@ const {
 
 router.post("/:service", rcw, service, addRecord);
 router.get("/:service/:id", rcw, service, getRecord);
-router.put("/:id", rcw, service, updateRecord);
-router.delete("/:id", manager, service, deleteRecord);
+router.put("/:id", rcw, updateRecord);
+router.delete("/:id", manager, deleteRecord);
 router.get("/:service/:date", rcw, service, getRecordsByDay);
 router.get("/:service/:startDate/:endDate", rcw, service, getRecordsByInterval);
 router.put("/archive/:id", manager, service, archiveRecord);
