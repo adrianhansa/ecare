@@ -7,6 +7,7 @@ const {
   deleteSupervision,
   getSupervisionsBySupervisee,
   getSupervisionsBySupervisor,
+  getLatestSupervision,
 } = require("../controllers/supervisionController");
 const { manager } = require("../middlewares/auth");
 const service = require("../middlewares/service");
@@ -28,6 +29,7 @@ router.get(
 );
 router.get("/:id", manager, getSupervision);
 router.put("/:id", manager, updateSupervision);
+router.get("/:supervisee", manager, getLatestSupervision);
 router.delete("/:id", manager, deleteSupervision);
 
 module.exports = router;

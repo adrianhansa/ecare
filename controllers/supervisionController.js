@@ -39,6 +39,20 @@ const updateSupervision = async (req, res) => {
   }
 };
 
+const getLatestSupervision = async (req, res) => {
+  try {
+    const latestSupervision = await Supervision.findOne({ supervisee }).sort(
+      "date",
+      -1
+    );
+    if (!latestSupervision)
+      return res.status(404).json({ message: "Supervision not found" });
+    res.status(200).json(latestSupervision);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const getSupervision = async (req, res) => {
   try {
     const supervision = await Supervision.findById(req.params.id);
@@ -103,6 +117,7 @@ const deleteSupervision = async (req, res) => {
 module.exports = {
   addSupervision,
   updateSupervision,
+  getLatestSupervision,
   getSupervision,
   getSupervisions,
   deleteSupervision,
