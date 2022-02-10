@@ -25,7 +25,7 @@ const handoverRoutes = require("./routes/handoverEntryRoutes");
 const appraisalRoutes = require("./routes/appraisalRoutes");
 const supervisionRoutes = require("./routes/supervisionRoutes");
 const communicationRoutes = require("./routes/communicationRoutes");
-const absenceRoutes = require("./routes/absenceRutes");
+const absenceRoutes = require("./routes/absenceRoutes");
 const dailyObservationItemRoutes = require("./routes/dailyObservationItemRoutes");
 const dalyObservationRoutes = require("./routes/dailyObservationRoutes");
 
