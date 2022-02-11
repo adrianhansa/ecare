@@ -95,6 +95,17 @@ const getRecordsByDay = async (req, res) => {
   }
 };
 
+const getRecordsByResident = async (req, res) => {
+  try {
+    const records = await DailyObservation.find({
+      serviceUser: req.params.serviceUser,
+    });
+    res.status(200).json(records);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const getRecordsByInterval = async (req, res) => {
   try {
     const records = await DailyObservation.find({
@@ -157,4 +168,5 @@ module.exports = {
   archiveRecord,
   reactivateRecord,
   findRecord,
+  getRecordsByResident,
 };

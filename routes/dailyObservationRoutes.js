@@ -11,12 +11,14 @@ const {
   archiveRecord,
   reactivateRecord,
   findRecord,
+  getRecordsByResident,
 } = require("../controllers/dailyObservationController");
 
 router.post("/:service", rcw, service, addRecord);
 router.get("/:service/:id", rcw, service, getRecord);
 router.put("/:id", rcw, updateRecord);
 router.delete("/:id", manager, deleteRecord);
+router.get("/:serviceUser", manager, getRecordsByResident);
 router.get("/:service/:date", rcw, service, getRecordsByDay);
 router.get("/:service/:startDate/:endDate", rcw, service, getRecordsByInterval);
 router.put("/archive/:id", manager, service, archiveRecord);
