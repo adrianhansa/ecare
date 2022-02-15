@@ -14,7 +14,7 @@ const service = require("../middlewares/service");
 router.post("/:service/", manager, service, addWorkShift);
 router.get("/:service/:day", manager, service, getWorkShiftsByDay);
 router.get("/:service/:id", manager, service, getWorkShift);
-router.put("/:service/:id", manager, service, updateWorkShift);
+router.put("/:id", manager, updateWorkShift);
 router.delete("/:service/:id", manager, service, deleteWorkShift);
 router.get("/:service/:start/:end", manager, service, getWorkShiftsByInterval);
 router.get(
