@@ -10,7 +10,6 @@ const absenceSchema = new mongoose.Schema(
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     days: { type: Number, required: true },
-    absenseType: { type: String, required: true },
     notes: { type: String },
     service: {
       type: mongoose.Schema.Types.ObjectId,

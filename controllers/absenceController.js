@@ -2,7 +2,7 @@ const Absence = require("../models/Absence");
 
 const addAbsence = async (req, res) => {
   try {
-    const { employee, startDate, endDate, days, absenceType, notes } = req.body;
+    const { employee, startDate, endDate, days, notes } = req.body;
     if (!startDate || !endDate || !employee || !absenceType)
       return res.status(400).json({ message: "All the fields are required." });
     const absence = await Absence.create({
@@ -10,7 +10,6 @@ const addAbsence = async (req, res) => {
       startDate,
       endDate,
       days,
-      absenceType,
       notes,
     });
     res.status(200).json(absence);
@@ -21,12 +20,12 @@ const addAbsence = async (req, res) => {
 
 const updateAbsence = async (req, res) => {
   try {
-    const { startDate, endDate, days, absenceType, notes } = req.body;
-    if (!startDate || !endDate || !employee || absenceType)
+    const { startDate, endDate, days, notes } = req.body;
+    if (!startDate || !endDate || !employee)
       return res.status(400).json({ message: "All the fields are required." });
     const absence = await Absence.findByIdAndUpdate(
       req.params.id,
-      { startDate, endDate, days, absenceType, notes },
+      { startDate, endDate, days, notes },
       { new: true }
     );
     if (!absence) return res.status(404).json({ message: "Absence not found" });
