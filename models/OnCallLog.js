@@ -16,6 +16,11 @@ const onCallSchema = new mongoose.Schema(
       ref: "services",
     },
     action: { type: String, required: true },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "companies",
+    },
   },
   { timestamps: true }
 );
