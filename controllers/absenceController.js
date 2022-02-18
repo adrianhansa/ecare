@@ -3,7 +3,7 @@ const Absence = require("../models/Absence");
 const addAbsence = async (req, res) => {
   try {
     const { employee, startDate, endDate, days, notes } = req.body;
-    if (!startDate || !endDate || !employee || !absenceType)
+    if (!startDate || !endDate || !employee)
       return res.status(400).json({ message: "All the fields are required." });
     const absence = await Absence.create({
       employee,
@@ -11,6 +11,7 @@ const addAbsence = async (req, res) => {
       endDate,
       days,
       notes,
+      service: req.service,
     });
     res.status(200).json(absence);
   } catch (error) {
