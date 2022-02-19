@@ -48,13 +48,13 @@ const getAbsence = async (req, res) => {
 
 const getAbsencesByEmployee = async (req, res) => {
   try {
-    const { startDate, endDate } = req.params;
+    const { startDate, endDate, employee } = req.params;
     if (!startDate || !endDate)
       return res
         .status(400)
         .json({ message: "Both start and end date fields are required." });
     const absences = await Absence.find({
-      employee: req.params.employee,
+      employee,
       startDate: { $gte: startDate },
       endDate: { $lte: endDate },
     });
