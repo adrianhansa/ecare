@@ -8,6 +8,7 @@ const {
   getAbsence,
   getAbsencesByDates,
   getAbsencesByEmployee,
+  getBradfordScore,
 } = require("../controllers/absenceController");
 
 router.post("/:service", senior, service, addAbsence);
@@ -16,6 +17,7 @@ router.get(
   manager,
   getAbsencesByEmployee
 );
+router.get("/bradford-score/:employee", manager, getBradfordScore);
 router.get(
   "/:service/:startDate/:endDate",
   manager,

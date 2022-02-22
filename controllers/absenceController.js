@@ -1,4 +1,6 @@
 const Absence = require("../models/Absence");
+const bradfordScore = require("../utils/bradfordScore");
+const moment = require("moment");
 
 const addAbsence = async (req, res) => {
   try {
@@ -41,6 +43,18 @@ const getAbsence = async (req, res) => {
     const absence = await Absence.findById(req.params.id);
     if (!absence) return res.status(404).json({ message: "Absence not found" });
     res.status(200).json(absence);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const getBradfordScore = async (req, res) => {
+  try {
+    const absences = await Absence.find({
+      employee: req.params.employee,
+      startDate: { $gte: moment(new Date()).add(-364, "days") },
+    });
+    res.status(200).json(bradfordScore(absences));
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -99,4 +113,5 @@ module.exports = {
   getAbsence,
   getAbsencesByDates,
   getAbsencesByEmployee,
+  getBradfordScore,
 };
