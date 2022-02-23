@@ -60,6 +60,21 @@ const getBradfordScore = async (req, res) => {
   }
 };
 
+const removeDateFromAbsencePeriod = async (req, res) => {
+  try {
+    const absence = await Absence.findByIdAndUpdate(
+      req.params.id,
+      { days: req.body.days },
+      { new: true }
+    );
+    if (!absence)
+      return res.status(404).json({ message: "Absence record not found." });
+    res.status(200).json(absence);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const getAbsencesByEmployee = async (req, res) => {
   try {
     const { startDate, endDate, employee } = req.params;
@@ -114,4 +129,5 @@ module.exports = {
   getAbsencesByDates,
   getAbsencesByEmployee,
   getBradfordScore,
+  removeDateFromAbsencePeriod,
 };

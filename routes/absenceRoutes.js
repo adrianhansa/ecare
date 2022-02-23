@@ -9,6 +9,7 @@ const {
   getAbsencesByDates,
   getAbsencesByEmployee,
   getBradfordScore,
+  removeDateFromAbsencePeriod,
 } = require("../controllers/absenceController");
 
 router.post("/:service", senior, service, addAbsence);
@@ -26,6 +27,7 @@ router.get(
 );
 router.get("/:id", senior, getAbsence);
 router.put("/:id", senior, updateAbsence);
+router.put("/remove-date/:id", manager, removeDateFromAbsencePeriod);
 router.delete("/:id", manager, deleteAbsence);
 
 module.exports = router;
