@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const diarySchema = new mongoose.Schema(
   {
@@ -7,16 +7,17 @@ const diarySchema = new mongoose.Schema(
     employee: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "employees",
+      ref: 'employees',
     },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "services",
+      ref: 'services',
     },
     content: { type: String, required: true },
+    completed: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("diaries", diarySchema);
+module.exports = mongoose.model('diaries', diarySchema);
