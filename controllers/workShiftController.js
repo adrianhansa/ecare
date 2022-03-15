@@ -24,19 +24,30 @@ const addWorkShift = async (req, res) => {
 
 const updateWorkShift = async (req, res) => {
   try {
-    const { date, employee, shift, startTime, endTime, notes, allocatedTo } =
-      req.body;
-    if (!date || !employee || !shift || !startTime || !endTime)
+    const { shift, startTime, endTime, notes, allocatedTo } = req.body;
+    let duration;
+    if (!shift || !startTime || !endTime)
       return res.status(400).json({ message: "All fields are required." });
+    const startHour = startTime.split(":")[0];
+    const startMin = startTime.split(":")[1];
+    const start = startHour * 3600 + startMin * 60;
+
+    const endHour = endTime.split(":")[0];
+    const endMin = endTime.split(":")[1];
+    const end = endHour * 3600 + endMin * 60;
+    if (end < start) {
+      duration = 86400 - start + end;
+    } else {
+      duration = end - start;
+    }
     const workShift = await WorkShift.findByIdAndUpdate(
       req.params.id,
       {
-        date,
-        employee,
         shift,
         startTime,
         endTime,
         notes,
+        duration,
         allocatedTo,
       },
       { new: true }
@@ -88,7 +99,9 @@ const getWorkShiftsByInterval = async (req, res) => {
     const workshifts = await WorkShift.find({
       service: req.service,
       date: { $gte: req.params.start, $lte: req.params.end },
-    }).populate("shift");
+    })
+      .populate("shift")
+      .populate("employee", "name");
     res.status(200).json(workshifts);
   } catch (error) {
     return res.status(500).json({ message: error.message });

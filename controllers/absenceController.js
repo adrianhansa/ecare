@@ -1,17 +1,19 @@
 const Absence = require("../models/Absence");
+const bradfordScore = require("../utils/bradfordScore");
+const moment = require("moment");
 
 const addAbsence = async (req, res) => {
   try {
-    const { employee, startDate, endDate, days, absenceType, notes } = req.body;
-    if (!startDate || !endDate || !employee || !absenceType)
+    const { employee, startDate, endDate, days, notes } = req.body;
+    if (!startDate || !endDate || !employee)
       return res.status(400).json({ message: "All the fields are required." });
     const absence = await Absence.create({
       employee,
       startDate,
       endDate,
       days,
-      absenceType,
       notes,
+      service: req.service,
     });
     res.status(200).json(absence);
   } catch (error) {
@@ -21,12 +23,12 @@ const addAbsence = async (req, res) => {
 
 const updateAbsence = async (req, res) => {
   try {
-    const { startDate, endDate, days, absenceType, notes } = req.body;
-    if (!startDate || !endDate || !employee || absenceType)
+    const { startDate, endDate, days, notes } = req.body;
+    if (!startDate || !endDate || !employee)
       return res.status(400).json({ message: "All the fields are required." });
     const absence = await Absence.findByIdAndUpdate(
       req.params.id,
-      { startDate, endDate, days, absenceType, notes },
+      { startDate, endDate, days, notes },
       { new: true }
     );
     if (!absence) return res.status(404).json({ message: "Absence not found" });
@@ -46,15 +48,42 @@ const getAbsence = async (req, res) => {
   }
 };
 
+const getBradfordScore = async (req, res) => {
+  try {
+    const absences = await Absence.find({
+      employee: req.params.employee,
+      startDate: { $gte: moment(new Date()).add(-364, "days") },
+    });
+    res.status(200).json(bradfordScore(absences));
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const removeDateFromAbsencePeriod = async (req, res) => {
+  try {
+    const absence = await Absence.findByIdAndUpdate(
+      req.params.id,
+      { days: req.body.days },
+      { new: true }
+    );
+    if (!absence)
+      return res.status(404).json({ message: "Absence record not found." });
+    res.status(200).json(absence);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const getAbsencesByEmployee = async (req, res) => {
   try {
-    const { startDate, endDate } = req.params;
+    const { startDate, endDate, employee } = req.params;
     if (!startDate || !endDate)
       return res
         .status(400)
         .json({ message: "Both start and end date fields are required." });
     const absences = await Absence.find({
-      employee: req.params.employee,
+      employee,
       startDate: { $gte: startDate },
       endDate: { $lte: endDate },
     });
@@ -99,4 +128,6 @@ module.exports = {
   getAbsence,
   getAbsencesByDates,
   getAbsencesByEmployee,
+  getBradfordScore,
+  removeDateFromAbsencePeriod,
 };

@@ -28,8 +28,10 @@ const communicationRoutes = require("./routes/communicationRoutes");
 const absenceRoutes = require("./routes/absenceRoutes");
 const dailyObservationItemRoutes = require("./routes/dailyObservationItemRoutes");
 const dalyObservationRoutes = require("./routes/dailyObservationRoutes");
+const onCallRoutes = require("./routes/onCallLogRoutes");
 
 app.use("/", userRoutes);
+app.use("/on-call", onCallRoutes);
 app.use("/services", serviceRoutes);
 app.use("/employees", employeeRoutes);
 app.use("/shifts", shiftRoutes);
